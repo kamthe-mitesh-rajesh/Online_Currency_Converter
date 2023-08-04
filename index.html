@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Online Currency Converter</title>
+<style>
+	*{background-color: lightblue;font-family:Algerian,Times New Roman; font-size:60px;}
+	input[type="submit"]{background-color:orange;}
+</style>
+<script>
+	function convert(){
+
+	event.preventDefault();
+	let amt = document.getElementById("amt");
+	let ans = document.getElementById("ans");
+	let url = "https://api.exchangerate-api.com/v4/latest/USD";
+ 	let dollar = 0.0;
+	if(amt.value==""){
+		alert("Please Write a Number");
+		ans.innerHTML="";
+		amt.focus();
+		return;
+	}
+				let aid = parseFloat(amt.value);
+	fetch(url)
+	.then(res=>res.json())
+	.then(data=>{dollar = data.rates.INR;
+			let air = aid*dollar;
+			let msg = "₹" + air.toFixed(2);
+			ans.innerHTML = msg;})
+	.catch(err => {ans.innerHTML = "issue" + err;});
+}	
+	
+</script>
+</head>
+<body><center>
+	<h1>Currency Coverter</h1>
+	<form onsubmit = "convert()">
+		<input type="number" placeholder="Enter The value $" id="amt" />
+		<br><br>
+		<input type="submit" value="Convert To ₹" id = "bt"/>
+		<br><br>
+	</form>
+	<h2 id = "ans"/>
+</center></body>
+</html>
